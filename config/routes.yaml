@@ -1,0 +1,5 @@
+controllers:
+    resource:
+        path: ../src/TaskManager/Application/Controller/
+        namespace: App\TaskManager\Application\Controller
+    type: attribute
