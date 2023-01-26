@@ -3,8 +3,7 @@
 namespace App\Tests\TaskManager\Domain\UseCase;
 
 use Ramsey\Uuid\Uuid;
-use App\TaskManager\Domain\Entity\Task;
-use App\TaskManager\Domain\Entity\TaskId;
+use App\TaskManager\Domain\DTO\CreateTaskDTO;
 use App\TaskManager\Domain\UseCase\CreateTask;
 use App\TaskManager\Domain\UseCase\MarkTaskAsDone;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -12,31 +11,31 @@ use App\Tests\TaskManager\Infrastructure\Repository\InMemoryTaskRepository;
 
 class MarkTaskAsDoneTest extends KernelTestCase
 {
+    private InMemoryTaskRepository $inMemoryTaskRepository;
 
-    private $inMemoryTaskRepository;
-
+    /**
+     * @return void
+     */
     public function setUp(): void
     {
         $this->inMemoryTaskRepository = new InMemoryTaskRepository();
     }
 
-    public function testMarkTaskAsDone()
+    /**
+     * @return void
+     */
+    public function testMarkTaskAsDone(): void
     {
-
-        $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+        $taskDTO = new CreateTaskDTO(
             'test',
-            'test'
+            'test',
+            Uuid::uuid4()->toString()
         );
 
-        (new CreateTask($this->inMemoryTaskRepository))->execute($task);
-        $this->assertNull($task->getDoneAt());
+        $taskCreated = (new CreateTask($this->inMemoryTaskRepository))->execute($taskDTO);
+        $this->assertNull($taskCreated->getDoneAt());
 
-        (new MarkTaskAsDone($this->inMemoryTaskRepository))->execute($task->getUuid());
-        $this->assertNotNull($task->getDoneAt());
-
+        (new MarkTaskAsDone($this->inMemoryTaskRepository))->execute($taskCreated->getUuid());
+        $this->assertNotNull($taskCreated->getDoneAt());
     }
- 
 }
-
-?>

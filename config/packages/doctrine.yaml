@@ -15,13 +15,13 @@ doctrine:
                 is_bundle: false
                 dir: "%kernel.project_dir%/src/TaskManager/Infrastructure/DoctrineMapping"
                 prefix: 'App\TaskManager\Domain\Entity'
-                alias: Task
+                alias: TaskTask
             User:
                 type: xml
                 is_bundle: false
                 dir: "%kernel.project_dir%/src/TaskManager/Infrastructure/DoctrineMapping"
                 prefix: 'App\TaskManager\Domain\Entity'
-                alias: User
+                alias: UserUser
 
 when@test:
     doctrine:

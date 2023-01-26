@@ -25,5 +25,3 @@ abstract class EntityId
         return $this->uuid;
     }
 }
-
-?>

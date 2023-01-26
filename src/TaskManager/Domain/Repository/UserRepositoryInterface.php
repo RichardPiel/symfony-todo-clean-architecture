@@ -1,30 +1,27 @@
-<?php 
+<?php
 
 namespace App\TaskManager\Domain\Repository;
 
-use App\TaskManager\Domain\Entity\User;
-use App\TaskManager\Domain\Entity\UserId;
+use App\TaskManager\Domain\Entity\User\User;
 
-interface UserRepositoryInterface {
-
+interface UserRepositoryInterface
+{
     /**
      * @param User $user
      * @return void
      */
     public function save(User $user): void;
 
-    /**
-     * @param UserId $id
-     * @return User|null
+        /**
+     * @return array<User>
      */
-    public function findById(string $id): ?User;
-
     public function findAll(): array;
 
+    /**
+     * @param string $email
+     * @return User|null
+     */
     public function findByEmail(string $email): ?User;
-    
 
+    public function findById(string $id): ?User;
 }
-
-
-?>

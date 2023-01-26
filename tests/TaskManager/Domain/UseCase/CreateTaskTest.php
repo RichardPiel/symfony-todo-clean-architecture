@@ -3,34 +3,30 @@
 namespace App\Tests\TaskManager\Domain\UseCase;
 
 use Ramsey\Uuid\Uuid;
-use App\TaskManager\Domain\Entity\Task;
-use App\TaskManager\Domain\Entity\TaskId;
+use App\TaskManager\Domain\DTO\CreateTaskDTO;
 use App\TaskManager\Domain\UseCase\CreateTask;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Tests\TaskManager\Infrastructure\Repository\InMemoryTaskRepository;
 
 class CreateTaskTest extends KernelTestCase
 {
-
-    public function testCreateTask()
+    /**
+     * @return void
+     */
+    public function testCreateTask(): void
     {
         $inMemoryTaskRepository = new InMemoryTaskRepository();
 
-        $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+        $taskDTO = new CreateTaskDTO(
             'test',
-            'test'
+            'test',
+            Uuid::uuid4()->toString()
         );
 
-        (new CreateTask($inMemoryTaskRepository))->execute($task);
+        $taskCreated = (new CreateTask($inMemoryTaskRepository))->execute($taskDTO);
 
         $this->assertNotNull($inMemoryTaskRepository->findAll());
 
-        $this->assertNotNull($inMemoryTaskRepository->findById($task->getUuid()));
-
-
+        $this->assertNotNull($inMemoryTaskRepository->findById($taskCreated->getUuid()));
     }
-
 }
-
-?>

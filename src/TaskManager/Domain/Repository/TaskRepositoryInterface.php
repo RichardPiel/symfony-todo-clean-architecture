@@ -1,16 +1,14 @@
-<?php 
+<?php
 
 namespace App\TaskManager\Domain\Repository;
 
-use App\TaskManager\Domain\Entity\Task;
-use App\TaskManager\Domain\Entity\TaskId;
-
+use App\TaskManager\Domain\Entity\Task\Task;
 
 /**
  * @method Task|null findById($id)
  */
-interface TaskRepositoryInterface {
-
+interface TaskRepositoryInterface
+{
     /**
      * @param Task $task
      * @return void
@@ -23,10 +21,8 @@ interface TaskRepositoryInterface {
      */
     public function findById(string $id): ?Task;
 
+    /**
+     * @return array<Task>
+     */
     public function findAll(): array;
-
-
 }
-
-
-?>

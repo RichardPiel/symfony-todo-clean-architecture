@@ -9,12 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/users", controller="App\TaskManager\Application\Controller\UserController")
- */
 class UserController extends AbstractController
 {
-
     public function __construct(private CreateUser $createUser)
     {
     }
@@ -23,8 +19,8 @@ class UserController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         $createUserDTO = new CreateUserDTO(
-            $request->request->get('email'),
-            $request->request->get('password')
+            (string) $request->request->get('email'),
+            (string) $request->request->get('password')
         );
 
         $userCreated = $this->createUser->execute($createUserDTO);
@@ -33,7 +29,5 @@ class UserController extends AbstractController
             'status' => 'ok',
             'user' => $userCreated
         ]);
-
     }
-
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Tests\TaskManager\Domain\Entity;
+namespace App\Tests\TaskManager\Domain\Entity\User;
 
-use App\TaskManager\Domain\Entity\UserEmail;
+use App\TaskManager\Domain\Entity\User\UserEmail;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class  UserEmailTest extends KernelTestCase {
-    
-
+class UserEmailTest extends KernelTestCase
+{
     /**
      * @dataProvider providerValidsEmails
      * @return void
      */
-    public function testUserEmailIsValid(string $email) {
+    public function testUserEmailIsValid(string $email)
+    {
         $userEmail = UserEmail::fromString($email);
         $this->assertEquals($email, $userEmail);
     }
@@ -22,7 +22,8 @@ class  UserEmailTest extends KernelTestCase {
      * @dataProvider providerInvalidsEmails
      * @return void
      */
-    public function testUserEmailIsInvalid(string $email) {
+    public function testUserEmailIsInvalid(string $email)
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid email format!');
@@ -30,6 +31,9 @@ class  UserEmailTest extends KernelTestCase {
         UserEmail::fromString($email);
     }
 
+    /**
+     * @return array<string[]>
+     */
     public function providerValidsEmails(): array
     {
         return [
@@ -40,6 +44,9 @@ class  UserEmailTest extends KernelTestCase {
         ];
     }
 
+    /**
+     * @return array<string[]>
+     */
     public function providerInvalidsEmails(): array
     {
         return [
@@ -49,5 +56,3 @@ class  UserEmailTest extends KernelTestCase {
         ];
     }
 }
-
-?>

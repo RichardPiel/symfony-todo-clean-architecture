@@ -3,34 +3,29 @@
 namespace App\Tests\TaskManager\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
-use App\TaskManager\Domain\Entity\Task;
-use App\TaskManager\Domain\Entity\TaskId;
+use App\TaskManager\Domain\Entity\Task\Task;
+use App\TaskManager\Domain\Entity\Task\TaskId;
 use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class TaskTest extends KernelTestCase
 {
-
-
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'name',
-            'content'
+            'name'
         );
 
         $this->assertNotNull($task);
         $this->assertEquals('name', $task->getName());
-        $this->assertEquals('content', $task->getContent());
     }
 
-    public function testSetName()
+    public function testSetName(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'name',
-            'content'
+            'name'
         );
 
         $task->setName('new name');
@@ -38,12 +33,11 @@ class TaskTest extends KernelTestCase
         $this->assertEquals('new name', $task->getName());
     }
 
-    public function testSetContent()
+    public function testSetContent(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'name',
-            'content'
+            'name'
         );
 
         $task->setContent('new content');
@@ -51,36 +45,35 @@ class TaskTest extends KernelTestCase
         $this->assertEquals('new content', $task->getContent());
     }
 
-    public function testSetUuid()
+    public function testSetUuid(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'name',
-            'content'
+            'name'
         );
 
-        $task->setUuid(new TaskId(Uuid::uuid4()->toString()));
+        $task->setUuid(
+            new TaskId(Uuid::uuid4()->toString())
+        );
 
         $this->assertNotNull($task->getUuid());
     }
 
-    public function testGetCreatedAt()
+    public function testGetCreatedAt(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'name',
-            'content'
+            'name'
         );
 
         $this->assertNotNull($task->getCreatedAt());
         $this->assertInstanceOf(\DateTimeImmutable::class, $task->getCreatedAt());
     }
 
-    public function testCannotMarkAsDoneIfAlreadyDone()
+    public function testCannotMarkAsDoneIfAlreadyDone(): void
     {
         $task = new Task(
             new TaskId(Uuid::uuid4()->toString()),
-            'test',
             'test'
         );
 
@@ -90,7 +83,4 @@ class TaskTest extends KernelTestCase
 
         $task->markAsDone();
     }
-
 }
-
-?>
