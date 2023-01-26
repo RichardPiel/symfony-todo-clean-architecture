@@ -4,38 +4,42 @@ namespace App\Tests\TaskManager\Domain\UseCase;
 
 use Ramsey\Uuid\Uuid;
 use App\TaskManager\Domain\DTO\CreateTaskDTO;
+use App\TaskManager\Domain\DTO\CreateUserDTO;
 use App\TaskManager\Domain\UseCase\CreateTask;
+use App\TaskManager\Domain\UseCase\CreateUser;
 use App\TaskManager\Domain\UseCase\MarkTaskAsDone;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Tests\TaskManager\Infrastructure\Repository\InMemoryTaskRepository;
+use App\Tests\TaskManager\Infrastructure\Repository\InMemoryUserRepository;
 
 class MarkTaskAsDoneTest extends KernelTestCase
 {
-    private InMemoryTaskRepository $inMemoryTaskRepository;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        $this->inMemoryTaskRepository = new InMemoryTaskRepository();
-    }
 
     /**
      * @return void
      */
     public function testMarkTaskAsDone(): void
     {
+        $inMemoryTaskRepository = new InMemoryTaskRepository();
+        $inMemoryUserRepository = new InMemoryUserRepository();
+
+        $userDTO = new CreateUserDTO(
+            'r.piel@webandcow.com',
+            'password'
+        );
+
+        $userCreated = (new CreateUser($inMemoryUserRepository))->execute($userDTO);
         $taskDTO = new CreateTaskDTO(
             'test',
             'test',
-            Uuid::uuid4()->toString()
+            $userCreated->getUuid()
         );
 
-        $taskCreated = (new CreateTask($this->inMemoryTaskRepository))->execute($taskDTO);
+
+        $taskCreated = (new CreateTask($inMemoryTaskRepository, $inMemoryUserRepository))->execute($taskDTO);
         $this->assertNull($taskCreated->getDoneAt());
 
-        (new MarkTaskAsDone($this->inMemoryTaskRepository))->execute($taskCreated->getUuid());
+        (new MarkTaskAsDone($inMemoryTaskRepository))->execute($taskCreated->getUuid());
         $this->assertNotNull($taskCreated->getDoneAt());
     }
 }

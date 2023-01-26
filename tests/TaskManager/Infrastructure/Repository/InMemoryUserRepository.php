@@ -2,7 +2,7 @@
 
 namespace App\Tests\TaskManager\Infrastructure\Repository;
 
-use App\TaskManager\Domain\Entity\User;
+use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 
 class InMemoryUserRepository implements UserRepositoryInterface
