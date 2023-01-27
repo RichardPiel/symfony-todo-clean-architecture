@@ -22,6 +22,7 @@ class TaskController extends AbstractController
         $name = (string) $request->request->get('name');
         $content = (string) $request->request->get('content');
         $userId = (string) $request->request->get('userId');
+        
         $taskDTO = new CreateTaskDTO(
             $name,
             $content,
