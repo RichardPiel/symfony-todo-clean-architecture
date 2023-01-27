@@ -9,10 +9,10 @@ use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 
 class Task
 {
-    protected DateTimeImmutable $createdAt;
     protected string $uuid;
     protected string $content;
     protected ?DateTimeInterface $doneAt = null;
+    protected DateTimeImmutable $createdAt;
     protected User $user;
 
     /**
@@ -22,7 +22,8 @@ class Task
     public function __construct(
         TaskId $uuid,
         protected string $name,
-    ) {
+    )
+    {
         $this->uuid = $uuid->getValue();
         $this->createdAt = new DateTimeImmutable();
     }
@@ -128,4 +129,5 @@ class Task
 
         return $this;
     }
+
 }

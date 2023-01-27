@@ -17,7 +17,7 @@ class User implements JsonSerializable
 
     protected string $password;
 
-    public function __construct(UserId $uuid, UserEmail $email)
+    public function __construct(UserId $uuid = null, UserEmail $email = null)
     {
         $this->uuid = $uuid->getValue();
         $this->email = $email;
@@ -48,6 +48,16 @@ class User implements JsonSerializable
     public function getTasks(): array
     {
         return $this->tasks;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
     }
 
     public function setPassword(string $password): void

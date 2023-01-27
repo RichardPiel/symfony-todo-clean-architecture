@@ -20,7 +20,15 @@ services:
             - '../src/DependencyInjection/'
             - '../src/TaskManager/Domain/Entity/'
             - '../src/Kernel.php'
-
-
+    # App\TaskManager\Infrastructure\Security\SecurityUser:
+    #         autowire: true
+    App\TaskManager\Domain\Entity\User\User:
+        autowire: true
+    # App\TaskManager\Domain\Entity\User\UserId:
+    #     autowire: true
+    # App\TaskManager\Domain\Entity\User\UserEmail:
+    #     autowire: true
+    # App\TaskManager\Domain\Entity\User\UserPassword:
+    #     autowire: true
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

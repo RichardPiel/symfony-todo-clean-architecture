@@ -11,7 +11,6 @@ class UserPassword
         $this->password = password_hash($password, self::ALGO);
     }
 
-
     /**
      * @param string $password
      * @return string
