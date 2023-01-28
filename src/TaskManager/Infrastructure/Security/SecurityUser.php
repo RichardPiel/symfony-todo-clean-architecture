@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface 
 {
-
     protected User $user;
 
     public function __construct(User $user)
@@ -27,7 +26,7 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -46,6 +45,10 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->user->getPassword();
     }
 
+    public function getUuid(): string
+    {
+        return $this->user->getUuid();
+    }
 }
 
 ?>

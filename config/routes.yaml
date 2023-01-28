@@ -3,3 +3,5 @@ controllers:
         path: ../src/TaskManager/Application/Controller/
         namespace: App\TaskManager\Application\Controller
     type: attribute
+api_login_check:
+    path: /api/login_check

@@ -5,6 +5,7 @@ namespace App\TaskManager\Domain\Entity\User;
 use JsonSerializable;
 use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Entity\User\UserId;
+use App\TaskManager\Domain\Entity\User\UserEmail;
 
 class User implements JsonSerializable
 {
@@ -79,4 +80,5 @@ class User implements JsonSerializable
             'tasks' => $this->tasks
         ];
     }
+
 }

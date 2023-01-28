@@ -4,8 +4,8 @@ namespace App\TaskManager\Application\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\TaskManager\Infrastructure\Security\SecurityUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\TaskManager\Infrastructure\Security\SecurityUser;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

@@ -7,8 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\TaskManager\Domain\UseCase\CreateTask;
 use Symfony\Component\Routing\Annotation\Route;
 use App\TaskManager\Domain\UseCase\MarkTaskAsDone;
+use App\TaskManager\Infrastructure\Security\SecurityUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class TaskController extends AbstractController
 {
@@ -16,22 +18,24 @@ class TaskController extends AbstractController
     {
     }
 
-    #[Route('/tasks/create', name: 'app_create_task', methods: ['POST'])]
-    public function create(Request $request): JsonResponse
+    #[Route('/api/tasks', name: 'app_create_task', methods: ['POST'])]
+    public function create(Request $request, #[CurrentUser] ?SecurityUser $user): JsonResponse
     {
+
         $name = (string) $request->request->get('name');
         $content = (string) $request->request->get('content');
-        $userId = (string) $request->request->get('userId');
+        $userId = $user->getUuid();
         
         $taskDTO = new CreateTaskDTO(
             $name,
             $content,
             $userId
         );
-        $this->createTask->execute($taskDTO);
+        $createdTask = $this->createTask->execute($taskDTO);
 
         return new JsonResponse([
             'status' => 'ok',
+            'task' => $createdTask
         ]);
     }
 

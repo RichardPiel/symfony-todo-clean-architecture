@@ -7,7 +7,7 @@ use DateTimeInterface;
 use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 
-class Task
+class Task implements \JsonSerializable
 {
     protected string $uuid;
     protected string $content;
@@ -129,5 +129,13 @@ class Task
 
         return $this;
     }
-
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'content' => $this->content,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'doneAt' => $this->doneAt ? $this->doneAt->format('Y-m-d H:i:s') : null,
+        ];
+    }
 }

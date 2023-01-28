@@ -20,8 +20,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/TaskManager/Domain/Entity/'
             - '../src/Kernel.php'
-    # App\TaskManager\Infrastructure\Security\SecurityUser:
-    #         autowire: true
+    App\TaskManager\Infrastructure\Security\SecurityUser:
+        autowire: true
     App\TaskManager\Domain\Entity\User\User:
         autowire: true
     # App\TaskManager\Domain\Entity\User\UserId:
