@@ -10,7 +10,7 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     protected User $user;
 
-    public function __construct(User $user)
+    public function __construct(?User $user = null)
     {
         $this->user = $user;
     }
@@ -48,6 +48,11 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUuid(): string
     {
         return $this->user->getUuid();
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }
 

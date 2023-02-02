@@ -15,20 +15,14 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
+        resource: '../src/*'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/TaskManager/Domain/Entity/'
+            - '../src/TaskManager/Infrastructure/Repository/InMemory'
             - '../src/Kernel.php'
     App\TaskManager\Infrastructure\Security\SecurityUser:
         autowire: true
-    App\TaskManager\Domain\Entity\User\User:
-        autowire: true
-    # App\TaskManager\Domain\Entity\User\UserId:
-    #     autowire: true
-    # App\TaskManager\Domain\Entity\User\UserEmail:
-    #     autowire: true
-    # App\TaskManager\Domain\Entity\User\UserPassword:
-    #     autowire: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

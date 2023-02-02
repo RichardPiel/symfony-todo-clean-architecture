@@ -12,7 +12,7 @@ interface UserRepositoryInterface
      */
     public function save(User $user): void;
 
-        /**
+    /**
      * @return array<User>
      */
     public function findAll(): array;

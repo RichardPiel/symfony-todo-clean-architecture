@@ -12,8 +12,9 @@ class Task implements \JsonSerializable
     protected string $uuid;
     protected string $content;
     protected ?DateTimeInterface $doneAt = null;
-    protected DateTimeImmutable $createdAt;
-    protected User $user;
+    readonly DateTimeImmutable $createdAt;
+    readonly User $user;
+    readonly string $user_id;
 
     /**
      * @param TaskId $uuid
@@ -115,6 +116,8 @@ class Task implements \JsonSerializable
     {
         $this->user = $user;
 
+        $this->user_id = $user->getUuid();
+
         return $this;
     }
 
@@ -137,5 +140,10 @@ class Task implements \JsonSerializable
             'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
             'doneAt' => $this->doneAt ? $this->doneAt->format('Y-m-d H:i:s') : null,
         ];
+    }
+
+    public function getUserId(): string
+    {
+        return $this->user_id;
     }
 }

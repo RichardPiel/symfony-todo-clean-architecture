@@ -2,12 +2,14 @@
 
 namespace App\TaskManager\Domain\Entity\User;
 
+use App\TaskManager\Domain\Exception\InvalidEmailFormatException;
+
 class UserEmail
 {
     private function __construct(public string $email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('Invalid email format!');
+            throw new InvalidEmailFormatException();
         }
     }
 

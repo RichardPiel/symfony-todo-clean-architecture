@@ -6,14 +6,14 @@ use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\TaskManager\Infrastructure\Security\SecurityUser;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use App\TaskManager\Infrastructure\Repository\Doctrine\UserRepository;
+use App\TaskManager\Infrastructure\Repository\Doctrine\DoctrineUserRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class SecurityUserProvider implements UserProviderInterface
 {
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(DoctrineUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }

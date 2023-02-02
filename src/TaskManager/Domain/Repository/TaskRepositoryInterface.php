@@ -22,7 +22,14 @@ interface TaskRepositoryInterface
     public function findById(string $id): ?Task;
 
     /**
-     * @return array<Task>
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @param integer|null $limit
+     * @param integer|null $offset
+     * @return array
      */
-    public function findAll(): array;
+    public function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
+
+    public function update(Task $task): void;
+
 }

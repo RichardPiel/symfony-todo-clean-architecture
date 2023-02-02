@@ -2,6 +2,8 @@
 
 namespace App\Shared\Domain\ValueObject;
 
+use App\TaskManager\Domain\Exception\InvalidUuidException;
+
 abstract class EntityId
 {
     protected string $uuid;
@@ -9,7 +11,7 @@ abstract class EntityId
     public function __construct(string $uuid)
     {
         if (!preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $uuid)) {
-            throw new \InvalidArgumentException('Not valid UUID');
+            throw new InvalidUuidException();
         }
 
         $this->uuid = $uuid;
