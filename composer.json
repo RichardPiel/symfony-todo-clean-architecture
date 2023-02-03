@@ -75,6 +75,7 @@
         "test": "./vendor/bin/phpunit",
         "test-coverage": "./vendor/bin/phpunit --coverage-html coverage",
         "stan": "./vendor/bin/phpstan --xdebug",
+        "deptrac": "./vendor/bin/deptrac --report-uncovered",
         "check": [
             "@test",
             "@cs-check"

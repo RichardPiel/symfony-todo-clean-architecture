@@ -15,6 +15,7 @@ class Task implements \JsonSerializable
     readonly DateTimeImmutable $createdAt;
     readonly User $user;
     readonly string $user_id;
+    protected array $tags;
 
     /**
      * @param TaskId $uuid
@@ -145,5 +146,15 @@ class Task implements \JsonSerializable
     public function getUserId(): string
     {
         return $this->user_id;
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(array $tags): void
+    {
+        $this->tags = $tags;
     }
 }

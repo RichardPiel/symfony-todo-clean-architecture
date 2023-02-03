@@ -4,10 +4,6 @@ deptrac:
   exclude_files:
     - '#.*test.*#'
   layers:
-    # - name: Application
-    #   collectors:
-    #     - type: className
-    #       regex: .*Application\\.*
     - name: Domain
       collectors:
         - type: className

@@ -11,7 +11,7 @@
         <field name="content" type="text" column="content" length="255" />
         <field name="createdAt" type="datetime_immutable" column="created_at"  />
         <field name="doneAt" type="datetime" column="done_at" nullable="true" />
-   <many-to-one
+        <!-- <many-to-one
             field="user"
             target-entity="App\TaskManager\Domain\Entity\User\User"
           >
@@ -19,7 +19,18 @@
              <cascade>
                 <cascade-persist/>
             </cascade>
-        </many-to-one>     
+        </many-to-one> -->
+        <!-- <many-to-many field="tags" target-entity="App\TaskManager\Domain\Entity\Tag\Tag">
+            <join-table name="tags_tasks">
+                <inverse-join-columns>
+                    <join-column name="task_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+                <join-columns>
+                    <join-column name="tag_id" referenced-column-name="id"/>
+                </join-columns>
+            </join-table>
+        </many-to-many>
+      -->
     </entity>
 
 </doctrine-mapping>
