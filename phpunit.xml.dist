@@ -24,6 +24,9 @@
         <testsuite name="Domain UseCase">
             <directory>tests/TaskManager/Domain/UseCase</directory>
         </testsuite>
+        <testsuite name="Application">
+            <directory>tests/TaskManager/Application</directory>
+        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">
