@@ -3,21 +3,12 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-
-    <entity name="App\TaskManager\Domain\Entity\Tag\Tag" table="user" repository-class="App\TaskManager\Infrastructure\Repository\Doctrine\DoctrineTagRepository">
+    <entity lazy="false" name="App\TaskManager\Domain\Entity\Tag\Tag" table="tag" repository-class="App\TaskManager\Infrastructure\Repository\Doctrine\DoctrineTagRepository">
         <id name="uuid" type="guid" column="id" length="36" />
         <field name="name" column="name" length="255" />
-        <!-- <many-to-many field="tasks" target-entity="App\TaskManager\Domain\Entity\Task\Task">
-            <join-table name="tags_tasks">
-                <join-columns>
-                    <join-column name="task_id" referenced-column-name="id"/>
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="tag_id" referenced-column-name="id"/>
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many> -->
-
+        <many-to-one
+            field="user"
+            target-entity="App\TaskManager\Domain\Entity\User\User"
+          />
     </entity>
-
 </doctrine-mapping>

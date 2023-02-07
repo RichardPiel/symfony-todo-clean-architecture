@@ -2,8 +2,9 @@
 
 namespace App\TaskManager\Application\Presenter;
 
-use App\TaskManager\Domain\UseCase\MarkTaskAsDone\MarkTaskAsDonePresenterInterface;
+use App\TaskManager\Application\ViewModel\MarkTaskAsDoneJsonViewModel;
 use App\TaskManager\Domain\UseCase\MarkTaskAsDone\MarkTaskAsDoneResponse;
+use App\TaskManager\Domain\UseCase\MarkTaskAsDone\MarkTaskAsDonePresenterInterface;
 
 class MarkTaskAsDonePresenter implements MarkTaskAsDonePresenterInterface
 {

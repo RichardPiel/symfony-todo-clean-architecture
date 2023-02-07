@@ -2,11 +2,12 @@
 
 namespace App\TaskManager\Infrastructure\Repository\Doctrine;
 
-use App\TaskManager\Domain\Entity\Task\Task;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
+use App\TaskManager\Domain\Entity\Task\Task;
+use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Repository\TaskRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManager;
 
 class DoctrineTaskRepository extends ServiceEntityRepository implements TaskRepositoryInterface
 {
@@ -65,4 +66,5 @@ class DoctrineTaskRepository extends ServiceEntityRepository implements TaskRepo
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
+
 }

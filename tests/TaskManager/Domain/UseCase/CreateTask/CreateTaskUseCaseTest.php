@@ -1,36 +1,38 @@
 <?php
 
-use App\TaskManager\Domain\Entity\User\UserEmail;
-use App\TaskManager\Domain\Entity\User\UserId;
+use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\TestCase;
 use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\Entity\User\UserId;
+use App\TaskManager\Domain\Entity\User\UserEmail;
+use App\TaskManager\Domain\Repository\TagRepositoryInterface;
 use App\TaskManager\Domain\Repository\TaskRepositoryInterface;
 use App\TaskManager\Domain\UseCase\CreateTask\CreateTaskRequest;
 use App\TaskManager\Domain\UseCase\CreateTask\CreateTaskUseCase;
 use App\TaskManager\Domain\UseCase\CreateTask\CreateTaskPresenterInterface;
 use App\TaskManager\Domain\UseCase\CreateTask\Service\ExceedingNumberOfTasks;
-use Ramsey\Uuid\Uuid;
 
 class CreateTaskUseCaseTest extends TestCase
 {
-    private $taskRepository;
+    private TaskRepositoryInterface $taskRepository;
+    private TagRepositoryInterface $tagRepository;
     private $createTaskUseCase;
 
     protected function setUp(): void
     {
         $this->taskRepository = $this->createMock(TaskRepositoryInterface::class);
+        $this->tagRepository = $this->createMock(TagRepositoryInterface::class);
         $exceedingNumberOfTasks = $this->createMock(ExceedingNumberOfTasks::class);
-        $this->createTaskUseCase = new CreateTaskUseCase($this->taskRepository, $exceedingNumberOfTasks);
+        $this->createTaskUseCase = new CreateTaskUseCase($this->taskRepository, $this->tagRepository, $exceedingNumberOfTasks);
     }
 
     public function testExecuteShouldCreateTaskSuccessfully()
     {
         $request = new CreateTaskRequest(
             'Name',
-            'Content',
             new User(
-                new UserId(Uuid::uuid4()),
+                UserId::fromString(Uuid::uuid4()),
                 UserEmail::fromString('test@mail.com')
             )
         );
@@ -40,7 +42,6 @@ class CreateTaskUseCaseTest extends TestCase
         $presenter->expects($this->once())
             ->method('present')
             ->with($this->callback(function ($response) {
-                dd($response);
                 return !$response->hasError();
             }));
 

@@ -28,10 +28,12 @@ final class CreateTaskController extends AbstractController
     {
         $taskRequest = new CreateTaskRequest(
             $request->get('name'),
+            $user->getUser(),
             $request->get('content'),
-            $user->getUser()
+            $request->get('parentTaskId'),
+            $request->get('tags')
         );
-
+ 
         $this->createTaskUseCase->execute($taskRequest, $this->createTaskPresenter);
 
         return $this->createTaskJsonView->generateView($this->createTaskPresenter->viewModel());

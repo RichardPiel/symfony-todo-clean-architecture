@@ -4,16 +4,17 @@ namespace App\Tests\TaskManager\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
 use App\TaskManager\Domain\Entity\Task\Task;
+use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Entity\Task\TaskId;
-use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 
 class TaskTest extends KernelTestCase
 {
     public function testConstruct(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+            TaskId::fromString(Uuid::uuid4()),
             'name'
         );
 
@@ -24,7 +25,7 @@ class TaskTest extends KernelTestCase
     public function testSetName(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+           TaskId::fromString(Uuid::uuid4()),
             'name'
         );
 
@@ -36,7 +37,7 @@ class TaskTest extends KernelTestCase
     public function testSetContent(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+            TaskId::fromString(Uuid::uuid4()),
             'name'
         );
 
@@ -48,12 +49,12 @@ class TaskTest extends KernelTestCase
     public function testSetUuid(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+            TaskId::fromString(Uuid::uuid4()),
             'name'
         );
 
         $task->setUuid(
-            new TaskId(Uuid::uuid4()->toString())
+            TaskId::fromString(Uuid::uuid4()),
         );
 
         $this->assertNotNull($task->getUuid());
@@ -62,7 +63,7 @@ class TaskTest extends KernelTestCase
     public function testGetCreatedAt(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+            TaskId::fromString(Uuid::uuid4()),
             'name'
         );
 
@@ -73,7 +74,7 @@ class TaskTest extends KernelTestCase
     public function testCannotMarkAsDoneIfAlreadyDone(): void
     {
         $task = new Task(
-            new TaskId(Uuid::uuid4()->toString()),
+            TaskId::fromString(Uuid::uuid4()),
             'test'
         );
 
@@ -82,5 +83,30 @@ class TaskTest extends KernelTestCase
         $this->expectException(TaskAlreadyDoneException::class);
 
         $task->markAsDone();
+    }
+
+    public function testJsonSerialize()
+    {
+        $task = new Task(
+            TaskId::fromString(Uuid::uuid4()),
+            'test'
+        );
+
+        $task->setContent('content');
+
+        $this->assertJson(json_encode($task));
+    }
+
+    public function testSetGetUser()
+    {
+        $task = new Task(
+            TaskId::fromString(Uuid::uuid4()),
+            'test'
+        );
+
+        $user = $this->getMockBuilder(User::class)->getMock();
+        $task->setUser($user);
+
+        $this->assertEquals($user, $task->getUser());
     }
 }

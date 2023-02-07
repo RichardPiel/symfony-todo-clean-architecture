@@ -13,11 +13,11 @@ deptrac:
     #     - type: className
     #       regex: .*Infrastructure\\.*
   ruleset:
-    # Application:
-    #   - Domain
-    #   - Infrastructure
-    # Infrastructure:
-    #   - Domain
+    Application:
+      - Domain
+    Infrastructure:
+      - Domai
+      - Application
     Domain:
       - Domain
 

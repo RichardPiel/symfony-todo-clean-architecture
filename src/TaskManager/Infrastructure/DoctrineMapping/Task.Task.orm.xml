@@ -3,34 +3,30 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-
-    <entity name="App\TaskManager\Domain\Entity\Task\Task" table="task" repository-class="App\TaskManager\Infrastructure\Repository\Doctrine\DoctrineTaskRepository">
+    <entity lazy="false" name="App\TaskManager\Domain\Entity\Task\Task" table="task" repository-class="App\TaskManager\Infrastructure\Repository\Doctrine\DoctrineTaskRepository">
         <id name="uuid" type="guid" column="id" length="36" />
-        <id name="user_id" type="guid" column="user_id" length="36" />
         <field name="name" column="name" length="255" />
         <field name="content" type="text" column="content" length="255" />
         <field name="createdAt" type="datetime_immutable" column="created_at"  />
         <field name="doneAt" type="datetime" column="done_at" nullable="true" />
-        <!-- <many-to-one
+        <many-to-one
             field="user"
             target-entity="App\TaskManager\Domain\Entity\User\User"
-          >
-            <join-column nullable="false"/>
-             <cascade>
-                <cascade-persist/>
-            </cascade>
-        </many-to-one> -->
-        <!-- <many-to-many field="tags" target-entity="App\TaskManager\Domain\Entity\Tag\Tag">
+          />
+        <one-to-many
+            field="childTasks" target-entity="App\TaskManager\Domain\Entity\Task\Task"
+            mapped-by="parent"
+        />>
+        <many-to-one field="parentTask" target-entity="App\TaskManager\Domain\Entity\Task\Task" inversed-by="childTasks" />
+        <many-to-many field="tags" target-entity="App\TaskManager\Domain\Entity\Tag\Tag">
             <join-table name="tags_tasks">
-                <inverse-join-columns>
-                    <join-column name="task_id" referenced-column-name="id"/>
-                </inverse-join-columns>
                 <join-columns>
-                    <join-column name="tag_id" referenced-column-name="id"/>
+                    <join-column name="task_id" referenced-column-name="id"/>
                 </join-columns>
+                <inverse-join-columns>
+                    <join-column name="tag_id" referenced-column-name="id"/>
+                </inverse-join-columns>
             </join-table>
         </many-to-many>
-      -->
     </entity>
-
 </doctrine-mapping>

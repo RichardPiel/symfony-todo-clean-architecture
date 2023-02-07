@@ -45,7 +45,7 @@ class RegisterUserUseCase
         }
 
         $user = new User(
-            (new UserId(Uuid::uuid4()->toString())),
+            UserId::fromString(Uuid::uuid4()),
             UserEmail::fromString($request->getEmail()),
         );
 

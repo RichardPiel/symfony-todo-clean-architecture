@@ -3,6 +3,7 @@
 namespace App\TaskManager\Application\Presenter;
 
 use App\TaskManager\Domain\UseCase\CreateTask\CreateTaskResponse;
+use App\TaskManager\Application\ViewModel\CreateTaskJsonViewModel;
 use App\TaskManager\Domain\UseCase\CreateTask\CreateTaskPresenterInterface;
 
 class CreateTaskPresenter implements CreateTaskPresenterInterface

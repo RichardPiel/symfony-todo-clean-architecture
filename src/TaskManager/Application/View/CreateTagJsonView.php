@@ -2,17 +2,18 @@
 
 namespace App\TaskManager\Application\View;
 
-use App\TaskManager\Application\ViewModel\RegisterUserJsonViewModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\TaskManager\Application\ViewModel\CreateTagJsonViewModel;
 
-class RegisterUserJsonView {
-
-    public function generateView(RegisterUserJsonViewModel $viewModel): JsonResponse
+class CreateTagJsonView
+{
+    public function generateView(CreateTagJsonViewModel $viewModel): JsonResponse
     {
         return new JsonResponse([
             'response' => $viewModel,
         ]);
     }
 }
+
 
 ?>

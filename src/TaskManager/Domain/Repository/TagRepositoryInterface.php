@@ -1,8 +1,9 @@
 <?php 
 
-namespace App\TagManager\Domain\Repository;
+namespace App\TaskManager\Domain\Repository;
 
 use App\TaskManager\Domain\Entity\Tag\Tag;
+use App\TaskManager\Domain\Entity\User\User;
 
 interface TagRepositoryInterface
 {
@@ -17,7 +18,7 @@ interface TagRepositoryInterface
      * @param string $id
      * @return Tag|null
      */
-    public function findById(string $id): ?Tag;
+    public function findByIdAndUser(string $id, User $user): ?Tag;
 
     /**
      * @param array $criteria
@@ -29,6 +30,8 @@ interface TagRepositoryInterface
     public function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
 
     public function update(Tag $tag): void;
+
+ 
 }
 
 ?>

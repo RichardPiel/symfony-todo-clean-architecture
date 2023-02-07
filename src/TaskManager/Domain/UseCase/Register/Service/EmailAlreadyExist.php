@@ -11,14 +11,9 @@ class EmailAlreadyExist {
 
     public function check(string $email)
     {
-
         $user = $this->userRepository->findByEmail($email);
 
-        if ($user) {
-            return true;
-        }
-
-        return false;
+        return $user ? true : false;
 
     }
 

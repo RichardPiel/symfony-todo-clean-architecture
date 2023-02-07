@@ -16,13 +16,16 @@ class ExceedingNumberOfTasksTest extends TestCase
 
     public function testCheck()
     {
-        $user = new User((new UserId(Uuid::uuid4())), UserEmail::fromString('test@example.com'));
+        $user = new User(
+            UserId::fromString(Uuid::uuid4()),
+            UserEmail::fromString('test@example.com')
+        );
 
         $taskReposityMock = $this->createMock(TaskRepositoryInterface::class);
 
         $taskReposityMock->expects($this->once())
             ->method('findBy')
-            ->with(['user_id' => $user->getUuid()])
+            ->with(['user' => $user])
             ->willReturn([1, 2, 3, 4, 5, 6]);
 
         $exceedingNumberOfTasks = new ExceedingNumberOfTasks($taskReposityMock);
@@ -33,13 +36,16 @@ class ExceedingNumberOfTasksTest extends TestCase
 
     public function testCheckFalse()
     {
-        $user = new User((new UserId(Uuid::uuid4())), UserEmail::fromString('test@example.com'));
+        $user = new User(
+            UserId::fromString(Uuid::uuid4()),
+            UserEmail::fromString('test@example.com')
+        );
 
         $taskReposityMock = $this->createMock(TaskRepositoryInterface::class);
 
         $taskReposityMock->expects($this->once())
             ->method('findBy')
-            ->with(['user_id' => $user->getUuid()])
+            ->with(['user' => $user])
             ->willReturn([1, 2, 3, 4]);
 
         $exceedingNumberOfTasks = new ExceedingNumberOfTasks($taskReposityMock);

@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\TaskManager\Application\Presenter;
+namespace App\TaskManager\Application\ViewModel;
 
 use App\TaskManager\Domain\Entity\Task\Task;
 

@@ -14,7 +14,7 @@ class ExceedingNumberOfTasks {
 
     public function check(User $user)
     {
-        $tasks = $this->taskReposity->findBy(['user_id' => $user->getUuid()]);
+        $tasks = $this->taskReposity->findBy(['user' => $user]);
 
         return count($tasks) > 5;
 

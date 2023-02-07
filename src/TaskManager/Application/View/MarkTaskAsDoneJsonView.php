@@ -3,7 +3,7 @@
 namespace App\TaskManager\Application\View;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\TaskManager\Application\Presenter\MarkTaskAsDoneJsonViewModel;
+use App\TaskManager\Application\ViewModel\MarkTaskAsDoneJsonViewModel;
 
 class MarkTaskAsDoneJsonView
 {

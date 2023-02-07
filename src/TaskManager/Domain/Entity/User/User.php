@@ -2,26 +2,28 @@
 
 namespace App\TaskManager\Domain\Entity\User;
 
-use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Entity\User\UserId;
 use App\TaskManager\Domain\Entity\User\UserEmail;
+use Doctrine\Common\Collections\ArrayCollection;
 
-class User
+class User implements \JsonSerializable
 {
     /**
      * @var array<Task>
      */
-    protected Collection $tasks;
+    protected $tasks;
     protected ?string $uuid;
     protected ?string $email;
     protected string $password;
-
+    protected $tags;
+    
     public function __construct(UserId $uuid = null, UserEmail $email = null)
     {
         $this->uuid = $uuid?->getValue();
         $this->email = $email;
+        $this->tasks = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getUuid(): string
@@ -43,10 +45,7 @@ class User
         $this->email = $email;
     }
 
-    /**
-     * @return array<Task>
-     */
-    public function getTasks(): Collection
+    public function getTasks(): array
     {
         return $this->tasks;
     }
@@ -66,24 +65,33 @@ class User
         $this->password = $password;
     }
 
-    // /**
-    //  * Surement pas une bonne pratique, on devrait utiliser class
-    //  * dédiée.
-    //  *
-    //  * @return array<mixed>
-    //  */
-    // public function jsonSerialize(): array
-    // {
-    //     return [
-    //         'uuid' => $this->uuid,
-    //         'email' => $this->email,
-    //         'tasks' => $this->tasks
-    //     ];
-    // }
+    /**
+     * Surement pas une bonne pratique, on devrait utiliser class
+     * dédiée.
+     *
+     * @return array<mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'email' => $this->email,
+            // 'tasks' => $this->tasks
+        ];
+    }
 
     public function setTasks(mixed $tasks): void
     {
         $this->tasks = $tasks;
     }
 
+    public function getTags()
+        {
+        return $this->tags;
+    }
+
+    public function setTags($tags): void
+    {
+        $this->tags = $tags;
+    }
 }

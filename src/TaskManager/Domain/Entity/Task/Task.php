@@ -4,18 +4,21 @@ namespace App\TaskManager\Domain\Entity\Task;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use App\TaskManager\Domain\Entity\Tag\Tag;
 use App\TaskManager\Domain\Entity\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 
 class Task implements \JsonSerializable
 {
     protected string $uuid;
-    protected string $content;
+    protected ?string $content;
     protected ?DateTimeInterface $doneAt = null;
     readonly DateTimeImmutable $createdAt;
     readonly User $user;
-    readonly string $user_id;
-    protected array $tags;
+    protected $tags;
+    protected Task $parentTask;
+    protected $childTasks;
 
     /**
      * @param TaskId $uuid
@@ -28,6 +31,8 @@ class Task implements \JsonSerializable
     {
         $this->uuid = $uuid->getValue();
         $this->createdAt = new DateTimeImmutable();
+        $this->tags = new ArrayCollection();
+        $this->childTasks = new ArrayCollection();
     }
 
     /**
@@ -106,20 +111,15 @@ class Task implements \JsonSerializable
      * @param string $content
      * @return self
      */
-    public function setContent(string $content): self
+    public function setContent(?string $content): void
     {
         $this->content = $content;
-
-        return $this;
     }
 
-    public function setUser(User $user): self
+    public function setUser(User $user): void
     {
         $this->user = $user;
 
-        $this->user_id = $user->getUuid();
-
-        return $this;
     }
 
     public function getUser(): User
@@ -136,25 +136,47 @@ class Task implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'content' => $this->content,
             'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
             'doneAt' => $this->doneAt ? $this->doneAt->format('Y-m-d H:i:s') : null,
+            'tags' => $this->tags,
         ];
     }
 
-    public function getUserId(): string
-    {
-        return $this->user_id;
-    }
-
-    public function getTags(): array
+    public function getTags()
     {
         return $this->tags;
     }
 
-    public function setTags(array $tags): void
+    public function setTags($tags): void
     {
         $this->tags = $tags;
+    }
+
+    public function setParent(Task $task)
+    {
+        $this->parentTask = $task;
+    }
+
+    public function getParentTask(): Task
+    {
+        return $this->parentTask;
+    }
+
+    public function getChildTasks() 
+    {
+        return $this->childTasks;
+    }
+
+    public function setChildTasks( $childTasks)
+    {
+        $this->childTasks = $childTasks;
+    }
+
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
     }
 }

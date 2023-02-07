@@ -3,6 +3,7 @@
 namespace App\TaskManager\Domain\Repository;
 
 use App\TaskManager\Domain\Entity\Task\Task;
+use App\TaskManager\Domain\Entity\User\User;
 
 /**
  * @method Task|null findById($id)
@@ -31,5 +32,6 @@ interface TaskRepositoryInterface
     public function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
 
     public function update(Task $task): void;
+
 
 }

@@ -3,6 +3,7 @@
 namespace App\TaskManager\Application\Presenter;
 
 use App\TaskManager\Domain\UseCase\Register\RegisterUserResponse;
+use App\TaskManager\Application\ViewModel\RegisterUserJsonViewModel;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserPresenterInterface;
 
 class RegisterUserPresenter implements RegisterUserPresenterInterface

@@ -13,11 +13,11 @@ class UserTest extends KernelTestCase
     public function testSetUuid(): void
     {
         $user = new User(
-            new UserId(Uuid::uuid4()->toString()),
+            UserId::fromString(Uuid::uuid4()),
             UserEmail::fromString('mail@test.com')
         );
 
-        $newUuid = new UserId(Uuid::uuid4()->toString());
+        $newUuid = UserId::fromString(Uuid::uuid4());
         $user->setUuid($newUuid);
 
         $this->assertEquals($newUuid, $user->getUuid());
@@ -26,7 +26,7 @@ class UserTest extends KernelTestCase
     public function testSetEmail(): void
     {
         $user = new User(
-            new UserId(Uuid::uuid4()->toString()),
+            UserId::fromString(Uuid::uuid4()),
             UserEmail::fromString('mail@test.com')
         );
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\TagManager\Infrastructure\Repository\Doctrine;
+namespace App\TaskManager\Infrastructure\Repository\Doctrine;
 
-use App\TaskManager\Domain\Entity\Tag\Tag;
-use Doctrine\Persistence\ManagerRegistry;
-use App\TagManager\Domain\Repository\TagRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
+use App\TaskManager\Domain\Entity\Tag\Tag;
+use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\Repository\TagRepositoryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class DoctrineTagRepository extends ServiceEntityRepository implements TagRepositoryInterface
 {
@@ -24,9 +25,9 @@ class DoctrineTagRepository extends ServiceEntityRepository implements TagReposi
      * @param string $id
      * @return Tag|null
      */
-    public function findById(string $id): ?Tag
+    public function findByIdAndUser(string $id, User $user): ?Tag
     {
-        return $this->findOneBy(['uuid' => $id]);
+        return $this->findOneBy(['uuid' => $id, 'user' => $user]);
     }
 
     /**
