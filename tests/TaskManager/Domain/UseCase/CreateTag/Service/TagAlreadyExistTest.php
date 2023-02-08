@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\TaskManager\Domain\UseCase\CreateTag\Service;
+namespace App\Tests\TaskManager\Domain\UseCase\CreateTag\Service;
 
 use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\TestCase;

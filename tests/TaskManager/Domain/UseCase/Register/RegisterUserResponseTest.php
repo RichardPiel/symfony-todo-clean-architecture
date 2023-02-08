@@ -3,7 +3,6 @@
 namespace App\Tests\TaskManager\Domain\UseCase\Register;
 
 use App\TaskManager\Domain\Entity\User\User;
-use App\TaskManager\Domain\UseCase\ResponseTrait;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserResponse;
 use PHPUnit\Framework\TestCase;
 

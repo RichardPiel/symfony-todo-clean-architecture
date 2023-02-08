@@ -66,4 +66,13 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
     {
         return $this->findOneBy(['email' => $email]);
     }
+
+    /**
+     * @param string $email
+     * @return User|null
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?User
+    {
+        return parent::findOneBy($criteria);
+    }
 }

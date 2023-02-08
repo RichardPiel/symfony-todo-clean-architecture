@@ -27,6 +27,9 @@
         <testsuite name="Application">
             <directory>tests/TaskManager/Application</directory>
         </testsuite>
+        <testsuite name="Infrastructure">
+            <directory>tests/TaskManager/Infrastructure</directory>
+        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">

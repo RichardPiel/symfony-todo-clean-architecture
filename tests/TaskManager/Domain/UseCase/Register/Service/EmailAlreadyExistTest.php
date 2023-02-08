@@ -1,11 +1,12 @@
 <?php
 
-namespace App\TaskManager\Domain\UseCase\Register\Service;
+namespace App\Tests\TaskManager\Domain\UseCase\Register\Service;
 
 use PHPUnit\Framework\TestCase;
 use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Entity\User\UserEmail;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
+use App\TaskManager\Domain\UseCase\Register\Service\EmailAlreadyExist;
 
 class EmailAlreadyExistTest extends TestCase
 {

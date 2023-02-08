@@ -3,7 +3,6 @@
 namespace App\Tests\TaskManager\Domain\UseCase\Register;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserRequest;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserUseCase;

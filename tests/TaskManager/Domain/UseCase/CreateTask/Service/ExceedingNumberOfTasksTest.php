@@ -1,6 +1,6 @@
 <?php
 
-namespace App\TaskManager\Tests\Domain\UseCase\CreateTask\Service;
+namespace App\Tests\TaskManager\Domain\UseCase\CreateTask\Service;
 
 use App\TaskManager\Domain\Entity\User\UserEmail;
 use App\TaskManager\Domain\Entity\User\UserId;

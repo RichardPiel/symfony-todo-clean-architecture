@@ -28,4 +28,11 @@ interface UserRepositoryInterface
      * @return User|null
      */
     public function findById(string $id): ?User;
+
+    /**
+     * @param array $criteries
+     * @return User|null
+     */
+    public function findOneBy(array $criteries): ?User;
+
 }

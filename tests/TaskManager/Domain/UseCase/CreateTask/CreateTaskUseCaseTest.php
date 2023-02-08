@@ -1,4 +1,5 @@
 <?php
+namespace App\Tests\TaskManager\Domain\UseCase\CreateTask;
 
 use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\TestCase;
