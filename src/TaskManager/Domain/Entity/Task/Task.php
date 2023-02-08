@@ -15,7 +15,7 @@ class Task implements \JsonSerializable
     protected ?string $content;
     protected ?DateTimeInterface $doneAt = null;
     readonly DateTimeImmutable $createdAt;
-    readonly User $user;
+    protected User $user;
     protected $tags;
     protected Task $parentTask;
     protected $childTasks;
@@ -170,7 +170,7 @@ class Task implements \JsonSerializable
         return $this->childTasks;
     }
 
-    public function setChildTasks( $childTasks)
+    public function setChildTasks($childTasks)
     {
         $this->childTasks = $childTasks;
     }
