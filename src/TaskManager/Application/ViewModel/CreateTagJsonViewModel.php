@@ -6,13 +6,8 @@ use App\TaskManager\Domain\Entity\Tag\Tag;
 
 class CreateTagJsonViewModel
 {
-
-    public function __construct(
-        public ?array $errors = null,
-        public ?Tag $tag = null,
-    )
-    {
-    }
+    public ?array $errors;
+    public ?string $tagUuid;
 
 }
 

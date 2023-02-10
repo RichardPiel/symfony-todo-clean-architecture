@@ -6,12 +6,8 @@ use App\TaskManager\Domain\Entity\Task\Task;
 
 class MarkTaskAsDoneJsonViewModel
 {
-    public function __construct(
-        public ?array $errors = null,
-        public ?Task $task = null,
-    )
-    {
-    }
+    public ?array $errors;
+    public ?Task $task;
 
 }
 

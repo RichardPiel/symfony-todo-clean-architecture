@@ -19,13 +19,11 @@ class CreateTagController extends AbstractController
         private CreateTagUseCase $createTagUseCase,
         private CreateTagJsonView $createTagJsonView,
         private CreateTagPresenterInterface $createTagPresenter
-
     )
     {}
 
     public function __invoke(Request $request, #[CurrentUser] ?SecurityUser $user)
     {
-
         $tagRequest = new CreateTagRequest(
             $request->get('name'),
             $user->getUser()

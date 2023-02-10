@@ -109,7 +109,7 @@ class TagTest extends KernelTestCase
         $this->assertEquals([$task1, $task2], $tag->getTasks());
     }
 
-    public function testJsonSerialize()
+    public function testSerialize()
     {
         $tagId = TagId::fromString(Uuid::uuid4());
 

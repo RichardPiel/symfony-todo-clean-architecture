@@ -11,16 +11,16 @@ class CreateTaskResponse
 
     use ResponseTrait;
 
-    public ?Task $task = null;
+    public ?string $taskUuid = null;
 
-    public function getTask(): ?Task    
+    public function getTaskUuid(): ?string    
     {
-        return $this->task;
+        return $this->taskUuid;
     }
 
-    public function setTask(Task $task): void
+    public function setTaskUuid(string $taskUuid): void
     {
-        $this->task = $task;
+        $this->taskUuid = $taskUuid;
     }
 
 }

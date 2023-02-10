@@ -10,23 +10,23 @@ class RegisterUserResponse
 
     use ResponseTrait;
 
-    protected ?User $user = null;
+    public ?string $userUuid;
 
     /**
-     * @return User|null
+     * @return string|null
      */
-    public function getUser(): ?User
+    public function getUserUuid(): ?string
     {
-        return $this->user;
+        return $this->userUuid;
     }
 
     /**
-     * @param User|null $user
+     * @param string|null $userUuid
      * @return void
      */
-    public function setUser(?User $user): void
+    public function setUserUuid(?string $userUuid): void
     {
-        $this->user = $user;
+        $this->userUuid = $userUuid;
     }
 
 }

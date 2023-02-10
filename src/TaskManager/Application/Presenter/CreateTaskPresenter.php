@@ -19,8 +19,8 @@ class CreateTaskPresenter implements CreateTaskPresenterInterface
             $this->viewModel->errors = $response->getErrors();
         }
 
-        if ($response->getTask()) {
-            $this->viewModel->task = $response->getTask();
+        if ($response->getTaskUuid()) {
+            $this->viewModel->taskUuid = $response->getTaskUuid();
         }
 
     }

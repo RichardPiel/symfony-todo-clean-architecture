@@ -29,22 +29,22 @@ class CreateTagPresenterTest extends KernelTestCase
         $response->expects($this->exactly(2))
             ->method('getErrors')
             ->willReturn(['error']);
-
+        $tagUuid = TagId::fromString(Uuid::uuid4());
         $tag = new Tag(
-            TagId::fromString(Uuid::uuid4()),
+            $tagUuid,
             'name'
         );
-        
+
         $response->expects($this->exactly(2))
-            ->method('getTag')
+            ->method('getTagUuid')
             ->willReturn(
-                $tag
+                $tagUuid->getValue()
             );
 
         $this->presenter->present($response);
 
         $this->assertEquals($this->presenter->viewModel()->errors, ['error']);
-        $this->assertEquals($this->presenter->viewModel()->tag, $tag);
+        $this->assertEquals($this->presenter->viewModel()->tagUuid, $tag->getUuid());
 
     }
 

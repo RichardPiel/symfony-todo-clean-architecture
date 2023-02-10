@@ -9,16 +9,17 @@ class CreateTagResponse
 {
 
     use ResponseTrait;
-    protected ?Tag $tag = null;
+    
+    protected ?string $tagUuid = null;
  
-    public function getTag(): ?Tag
+    public function getTagUuid(): ?string
     {
-        return $this->tag;
+        return $this->tagUuid;
     }
 
-    public function setTag(?Tag $tag): void
+    public function setTagUuid(string $tagUuid): void
     {
-        $this->tag = $tag;
+        $this->tagUuid = $tagUuid;
     }
 }
 

@@ -21,6 +21,7 @@ class SecurityUsertest extends KernelTestCase
         $securityUser = new SecurityUser($user);
         $this->assertInstanceOf(User::class, $securityUser->getUser());
     }
+    
     public function testGetUuid()
     {
         $uuid = UserId::fromString(Uuid::uuid4());

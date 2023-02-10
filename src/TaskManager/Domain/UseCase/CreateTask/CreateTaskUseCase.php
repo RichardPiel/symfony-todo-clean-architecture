@@ -30,7 +30,7 @@ class CreateTaskUseCase
 
         try {
             $task = $this->createTask($request);
-            $response->setTask($task);
+            $response->setTaskUuid($task->getUuid());
         } catch (NumberOfTasksExceededException $th) {
             $response->setError('name', $th->getMessage());
         }

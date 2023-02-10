@@ -36,7 +36,7 @@ class SecurityUserProvider implements UserProviderInterface
         return $this->fetchUser($username);
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return SecurityUser::class === $class;
     }

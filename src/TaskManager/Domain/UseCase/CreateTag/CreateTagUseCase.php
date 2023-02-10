@@ -22,36 +22,36 @@ class CreateTagUseCase
     public function execute(CreateTagRequest $request, CreateTagPresenterInterface $presenter)
     {
         $response = new CreateTagResponse();
+
         try {
-            $tag = $this->createTag($request);
-            $response->setTag($tag);
+                $tag = $this->createTag($request);
+                $response->setTagUuid($tag->getUuid());
 
         } catch (TagAlreadyExistException $th) {
             $response->setError('name', $th->getMessage());
 
         } catch (\Throwable $th) {
             throw $th;
-
         }
 
         $presenter->present($response);
     }
 
-    public function createTag(CreateTagRequest $request): Tag
+    private function createTag(CreateTagRequest $request): Tag
     {
-
         if ($this->tagAlreadyExist->check($request->getName(), $request->getUser())) {
             throw new TagAlreadyExistException();
         }
 
         $tag = new Tag(
             TagId::fromString(Uuid::uuid4()),
-            $request->getName()
+            $request->getName(),
         );
 
         $tag->setUser($request->getUser());
 
         $this->repository->save($tag);
+        
         return $tag;
 
     }

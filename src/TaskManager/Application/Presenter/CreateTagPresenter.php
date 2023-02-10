@@ -17,11 +17,10 @@ class CreateTagPresenter implements CreateTagPresenterInterface
     {
         $this->viewModel = new CreateTagJsonViewModel();
         if ($response->getErrors()) {
-            
             $this->viewModel->errors = $response->getErrors();
         }
-        if ($response->getTag()) {
-            $this->viewModel->tag = $response->getTag();
+        if ($response->getTagUuid()) {
+            $this->viewModel->tagUuid = $response->getTagUuid();
         }
     }
 

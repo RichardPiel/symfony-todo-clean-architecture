@@ -17,8 +17,8 @@ class RegisterUserPresenter implements RegisterUserPresenterInterface
         if ($response->getErrors()) {
             $this->viewModel->errors = $response->getErrors();
         }
-        if ($response->getUser()) {
-            $this->viewModel->user = $response->getUser();
+        if ($response->getUserUuid()) {
+            $this->viewModel->userUuid = $response->getUserUuid();
         }
 
     }

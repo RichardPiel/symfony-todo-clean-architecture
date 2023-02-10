@@ -30,21 +30,22 @@ class CreateTaskPresenterTest extends KernelTestCase
             ->method('getErrors')
             ->willReturn(['error']);
 
+        $taskUuid = TaskId::fromString(Uuid::uuid4());
         $task = new Task(
-            TaskId::fromString(Uuid::uuid4()),
+            $taskUuid,
             'name'
         );
         
         $response->expects($this->exactly(2))
-            ->method('getTask')
+            ->method('getTaskUuid')
             ->willReturn(
-                $task
+                $taskUuid->getValue()
             );
 
         $this->presenter->present($response);
 
         $this->assertEquals($this->presenter->viewModel()->errors, ['error']);
-        $this->assertEquals($this->presenter->viewModel()->task, $task);
+        $this->assertEquals($this->presenter->viewModel()->taskUuid, $task->getUuid());
 
     }
 

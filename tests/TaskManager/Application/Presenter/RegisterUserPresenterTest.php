@@ -32,22 +32,23 @@ class RegisterUserPresenterTest extends KernelTestCase
         $response->expects($this->exactly(2))
             ->method('getErrors')
             ->willReturn(['error']);
+        $userUuid = UserId::fromString(Uuid::uuid4());
 
         $user = new User(
-            UserId::fromString(Uuid::uuid4()),
+            $userUuid,
             UserEmail::fromString('email@email.com'),
         );
         
         $response->expects($this->exactly(2))
-            ->method('getUser')
+            ->method('getUserUuid')
             ->willReturn(
-                $user
+                $userUuid->getValue()
             );
 
         $this->presenter->present($response);
 
         $this->assertEquals($this->presenter->viewModel()->errors, ['error']);
-        $this->assertEquals($this->presenter->viewModel()->user, $user);
+        $this->assertEquals($this->presenter->viewModel()->userUuid, $user->getUuid());
 
     }
 

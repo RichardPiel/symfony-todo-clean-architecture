@@ -2,9 +2,11 @@
 
 namespace App\Tests\TaskManager\Domain\UseCase\Register;
 
+use App\TaskManager\Domain\Entity\User\UserId;
+use Ramsey\Uuid\Uuid;
+use PHPUnit\Framework\TestCase;
 use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserResponse;
-use PHPUnit\Framework\TestCase;
 
 class RegisterUserResponseTest extends TestCase
 {
@@ -18,12 +20,12 @@ class RegisterUserResponseTest extends TestCase
         $this->registerUserResponse = new RegisterUserResponse();
     }
 
-    public function testGetUser(): void
+    public function testGetUserUuid(): void
     {
-        $user = new User();
-        $this->registerUserResponse->setUser($user);
+        $userUuid = UserId::fromString(Uuid::uuid4())->getValue();
+        $this->registerUserResponse->setUserUuid($userUuid);
 
-        $this->assertSame($user, $this->registerUserResponse->getUser());
+        $this->assertSame($userUuid, $this->registerUserResponse->getUserUuid());
     }
 
     public function testGetError(): void

@@ -30,7 +30,7 @@ class RegisterUserUseCase
 
         try {
             $user = $this->saveUser($request);
-            $registerUserResponse->setUser($user);
+            $registerUserResponse->setUserUuid($user->getUuid());
         } catch (EmailAlreadyExistException | InvalidEmailFormatException $e) {
             $registerUserResponse->setError('email', $e->getMessage());
         }
