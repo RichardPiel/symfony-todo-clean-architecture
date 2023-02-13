@@ -8,11 +8,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class RegisterUserJsonView
 {
 
-    public function generateView(RegisterUserJsonViewModel $viewModel): JsonResponse
+    public function generateView(RegisterUserJsonViewModel $viewModel, int $httpCode = 200): JsonResponse
     {
         return new JsonResponse([
             'response' => $viewModel,
-        ]);
+        ], $httpCode);
     }
 }
 

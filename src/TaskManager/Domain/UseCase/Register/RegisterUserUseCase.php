@@ -4,23 +4,29 @@ namespace App\TaskManager\Domain\UseCase\Register;
 
 use Ramsey\Uuid\Uuid;
 use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\Mailer\UserMailer;
 use App\TaskManager\Domain\Entity\User\UserId;
 use App\TaskManager\Domain\Entity\User\UserEmail;
+use App\TaskManager\Domain\Mailer\MailerInterface;
+use App\Shared\Domain\Service\PasswordRequirements;
 use App\TaskManager\Domain\Entity\User\UserPassword;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 use App\TaskManager\Domain\Exception\EmailAlreadyExistException;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserRequest;
 use App\TaskManager\Domain\Exception\InvalidEmailFormatException;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserResponse;
-use App\TaskManager\Domain\UseCase\Register\Service\EmailAlreadyExist;
+use App\TaskManager\Domain\Exception\InvalidPasswordRequirementsException;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserPresenterInterface;
+use App\TaskManager\Domain\UseCase\Register\Service\CheckIfEmailAlreadyUsed;
 
 class RegisterUserUseCase
 {
 
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private EmailAlreadyExist $emailAlreadyExist
+        private CheckIfEmailAlreadyUsed $emailAlreadyExist,
+        private PasswordRequirements $passwordRequirements,
+        private UserMailer $mailer
     )
     {}
 
@@ -31,8 +37,11 @@ class RegisterUserUseCase
         try {
             $user = $this->saveUser($request);
             $registerUserResponse->setUserUuid($user->getUuid());
+            $this->mailer->sendWelcome($user);
         } catch (EmailAlreadyExistException | InvalidEmailFormatException $e) {
             $registerUserResponse->setError('email', $e->getMessage());
+        } catch (InvalidPasswordRequirementsException $e) {
+            $registerUserResponse->setError('password', $e->getMessage());
         }
 
         $presenter->present($registerUserResponse);
@@ -43,6 +52,7 @@ class RegisterUserUseCase
         if ($this->emailAlreadyExist->check($request->getEmail())) {
             throw new EmailAlreadyExistException();
         }
+        $this->passwordRequirements->check($request->getPassword(), $request->getConfirmPassword());
 
         $user = new User(
             UserId::fromString(Uuid::uuid4()),

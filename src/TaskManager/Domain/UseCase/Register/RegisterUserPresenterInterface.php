@@ -11,6 +11,10 @@ interface RegisterUserPresenterInterface
 {
     public function present(RegisterUserResponse $response): void;
 
+    public function setHttpCode(int $code): void;
+
+    public function getHttpCode(): int;
+
 }
 
 

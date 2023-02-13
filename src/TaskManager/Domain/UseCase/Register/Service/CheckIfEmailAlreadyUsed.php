@@ -4,7 +4,7 @@ namespace App\TaskManager\Domain\UseCase\Register\Service;
 
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 
-class EmailAlreadyExist {
+class CheckIfEmailAlreadyUsed {
 
     public function __construct(private UserRepositoryInterface $userRepository)
     {}

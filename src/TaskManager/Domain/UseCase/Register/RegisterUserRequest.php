@@ -7,6 +7,7 @@ final class RegisterUserRequest {
   public function __construct(
     public string $email,
     public string $password,
+    public string $confirmPassword
   )
   {}
 
@@ -18,6 +19,11 @@ final class RegisterUserRequest {
   public function getPassword(): string
   {
     return $this->password;
+  }
+
+  public function getConfirmPassword(): string
+  {
+    return $this->confirmPassword;
   }
   
 }

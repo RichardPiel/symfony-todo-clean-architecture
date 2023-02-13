@@ -10,7 +10,7 @@ class RegisterUserResponse
 
     use ResponseTrait;
 
-    public ?string $userUuid;
+    public ?string $userUuid = null;
 
     /**
      * @return string|null

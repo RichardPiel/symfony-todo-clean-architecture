@@ -11,7 +11,7 @@ use App\TaskManager\Domain\UseCase\Register\RegisterUserRequest;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/register', name: 'app_register', methods: ['POST'])]
+#[Route('/api/register', name: 'app_register', methods: ['POST'])]
 final class RegisterUserController extends AbstractController
 {
 
@@ -24,13 +24,15 @@ final class RegisterUserController extends AbstractController
 
     public function __invoke(Request $request): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
         $registerUserRequest = new RegisterUserRequest(
-            $request->get('email'),
-            $request->get('password')
+            $data['email'],
+            $data['password'],
+            $data['confirm_password']
         );
         $this->registerUseCase->execute($registerUserRequest, $this->registerUserPresenter);
 
-        return $this->registerView->generateView($this->registerUserPresenter->viewModel());
+        return $this->registerView->generateView($this->registerUserPresenter->viewModel(), $this->registerUserPresenter->getHttpCode());
     }
 
 }

@@ -6,6 +6,8 @@ trait ResponseTrait {
 
     protected ?array $errors = null;
 
+    protected ?string $message = null;
+
     public function getErrors(): ?array
     {
         return $this->errors;
@@ -46,6 +48,20 @@ trait ResponseTrait {
     public function hasError()
     {
         return !empty($this->errors);
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $message
+     * @return void
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
     }
 }
 

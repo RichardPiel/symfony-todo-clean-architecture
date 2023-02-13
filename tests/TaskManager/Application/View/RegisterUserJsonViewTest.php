@@ -22,7 +22,7 @@ class RegisterUserJsonViewTest extends KernelTestCase
     public function testGenerateViewModel()
     {
         $this->viewModel->errors = ['error'];
-        $this->viewModel->user = new User(UserId::fromString(Uuid::uuid4()), UserEmail::fromString('test@test.com'));
+        $this->viewModel->userUuid = UserId::fromString(Uuid::uuid4());
 
         $response = $this->view->generateView($this->viewModel);
 
@@ -31,7 +31,7 @@ class RegisterUserJsonViewTest extends KernelTestCase
         $this->assertEquals([
             'response' => [
                 'errors' => $this->viewModel->errors,
-                'user' => $this->viewModel->user->jsonSerialize(),
+                'userUuid' => $this->viewModel->userUuid,
             ]
         ], json_decode($response->getContent(), true));
 

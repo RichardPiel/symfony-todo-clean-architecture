@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 use App\TaskManager\Domain\Entity\User\User;
 use App\TaskManager\Domain\Entity\User\UserEmail;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
-use App\TaskManager\Domain\UseCase\Register\Service\EmailAlreadyExist;
+use App\TaskManager\Domain\UseCase\Register\Service\CheckIfEmailAlreadyUsed;
 
-class EmailAlreadyExistTest extends TestCase
+class CheckIfEmailAlreadyUsedTest extends TestCase
 {
     /**
      * @var UserRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
@@ -16,14 +16,14 @@ class EmailAlreadyExistTest extends TestCase
     private $userRepository;
 
     /**
-     * @var EmailAlreadyExist
+     * @var CheckIfEmailAlreadyUsed
      */
     private $emailAlreadyExist;
 
     protected function setUp(): void
     {
         $this->userRepository = $this->createMock(UserRepositoryInterface::class);
-        $this->emailAlreadyExist = new EmailAlreadyExist($this->userRepository);
+        $this->emailAlreadyExist = new CheckIfEmailAlreadyUsed($this->userRepository);
     }
 
     public function testCheckShouldReturnTrueWhenEmailAlreadyExist()

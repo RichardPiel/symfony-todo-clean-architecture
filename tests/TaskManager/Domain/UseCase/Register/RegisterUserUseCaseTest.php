@@ -1,12 +1,14 @@
-<?php 
+<?php
 
 namespace App\Tests\TaskManager\Domain\UseCase\Register;
 
+use App\Shared\Domain\Service\PasswordRequirements;
+use App\TaskManager\Domain\Mailer\UserMailer;
 use PHPUnit\Framework\TestCase;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserRequest;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserUseCase;
-use App\TaskManager\Domain\UseCase\Register\Service\EmailAlreadyExist;
+use App\TaskManager\Domain\UseCase\Register\Service\CheckIfEmailAlreadyUsed;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserPresenterInterface;
 
 class RegisterUserUseCaseTest extends TestCase
@@ -15,12 +17,14 @@ class RegisterUserUseCaseTest extends TestCase
     public function testExecute()
     {
         $userRepository = $this->createMock(UserRepositoryInterface::class);
-        $emailAlreadyExist = $this->createMock(EmailAlreadyExist::class);
+        $emailAlreadyExist = $this->createMock(CheckIfEmailAlreadyUsed::class);
+        $userMail = $this->createMock(UserMailer::class);
+        $passwordRequirements = $this->createMock(PasswordRequirements::class);
         $presenter = $this->createMock(RegisterUserPresenterInterface::class);
 
-        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist);
+        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $passwordRequirements, $userMail);
 
-        $request = new RegisterUserRequest('example@email.com', 'password');
+        $request = new RegisterUserRequest('example@email.com', 'password', 'password');
 
         $emailAlreadyExist->expects($this->once())
             ->method('check')
@@ -39,12 +43,14 @@ class RegisterUserUseCaseTest extends TestCase
     public function testExecuteWithEmailAlreadyExistException()
     {
         $userRepository = $this->createMock(UserRepositoryInterface::class);
-        $emailAlreadyExist = $this->createMock(EmailAlreadyExist::class);
+        $emailAlreadyExist = $this->createMock(CheckIfEmailAlreadyUsed::class);
         $presenter = $this->createMock(RegisterUserPresenterInterface::class);
+        $userMail = $this->createMock(UserMailer::class);
+        $passwordRequirements = $this->createMock(PasswordRequirements::class);
 
-        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist);
+        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $passwordRequirements, $userMail);
 
-        $request = new RegisterUserRequest('example@email.com', 'password');
+        $request = new RegisterUserRequest('example@email.com', 'password', 'password');
 
         $emailAlreadyExist->expects($this->once())
             ->method('check')
