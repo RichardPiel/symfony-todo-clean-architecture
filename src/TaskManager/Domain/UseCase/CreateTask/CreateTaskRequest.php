@@ -4,8 +4,9 @@ namespace App\TaskManager\Domain\UseCase\CreateTask;
 
 use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\RequestInterface;
 
-class CreateTaskRequest
+class CreateTaskRequest implements RequestInterface
 {
     public function __construct(
         private string $name,

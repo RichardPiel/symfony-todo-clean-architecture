@@ -3,8 +3,9 @@
 namespace App\TaskManager\Domain\UseCase\MarkTaskAsDone;
 
 use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\RequestInterface;
 
-class MarkTaskAsDoneRequest
+class MarkTaskAsDoneRequest implements RequestInterface
 {
 
     public function __construct(

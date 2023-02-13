@@ -3,8 +3,9 @@
 namespace App\TaskManager\Domain\UseCase\CreateTag;
 
 use App\TaskManager\Domain\Entity\User\User;
+use App\TaskManager\Domain\RequestInterface;
 
-class CreateTagRequest 
+class CreateTagRequest implements RequestInterface
 {
     
     public function __construct(

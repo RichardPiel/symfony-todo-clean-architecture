@@ -1,8 +1,10 @@
 <?php 
 
 namespace App\TaskManager\Domain\UseCase\Register;
+use App\TaskManager\Domain\RequestInterface;
 
-final class RegisterUserRequest {
+class RegisterUserRequest implements RequestInterface
+{
 
   public function __construct(
     public string $email,
