@@ -16,12 +16,17 @@ class ValidationSet
 
     protected string $property;
 
-    public function add(string $rule, array $options = []): void
+    public function add(mixed $rule, array $options = []): void
     {
+        
         if (!isset($this->rules[$rule])) {
             $this->rules[$rule] = new ValidationRule($rule, $options);
         }
-       
+    }
+
+    public function getRules(): array
+    {
+        return $this->rules;
     }
    
 

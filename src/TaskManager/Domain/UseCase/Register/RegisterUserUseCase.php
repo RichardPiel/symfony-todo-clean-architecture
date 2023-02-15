@@ -38,22 +38,39 @@ class RegisterUserUseCase
 
         $validator = new Validator($request);
         $validator
-            ->add('email', 'NotEmpty', 'Email is required')
-            ->add('password', 'NotEmpty', 'Password is required')
-            ->add('confirm_password', 'NotEmpty', 'Confirm password is required');
+            ->add('email', 'NotEmpty', ['message' => 'Email is required'])
+            ->add('email', 'IsEmail', ['message' => 'Email is not valid'])
+            ->add('password', 'NotEmpty', ['message' => 'Password is required'])
+            ->add('confirm_password', 'NotEmpty', ['message' => 'Confirm password is required'])
+            ->add('password', 'NotEqual', [
+                'message' => 'Confirm password is not equal to password',
+                'rule' => function ($value, $context) {
+                    return
+                        isset($context->confirmPassword) &&
+                        $value === $context->confirmPassword;
+                }
+            ])
+            ->validate();
 
-        dd($validator);
+
         $registerUserResponse = new RegisterUserResponse();
 
-        try {
+        if (!$validator->isValid()) {
+            $registerUserResponse->setErrors($validator->getErrors());
+        } else {
             $user = $this->saveUser($request);
             $registerUserResponse->setUserUuid($user->getUuid());
             $this->mailer->sendWelcome($user);
-        } catch (EmailAlreadyExistException | InvalidEmailFormatException $e) {
-            $registerUserResponse->setError('email', $e->getMessage());
-        } catch (InvalidPasswordRequirementsException $e) {
-            $registerUserResponse->setError('password', $e->getMessage());
         }
+        // try {
+        //     $user = $this->saveUser($request);
+        //     $registerUserResponse->setUserUuid($user->getUuid());
+        //     $this->mailer->sendWelcome($user);
+        // } catch (EmailAlreadyExistException | InvalidEmailFormatException $e) {
+        //     $registerUserResponse->setError('email', $e->getMessage());
+        // } catch (InvalidPasswordRequirementsException $e) {
+        //     $registerUserResponse->setError('password', $e->getMessage());
+        // }
 
         $presenter->present($registerUserResponse);
     }

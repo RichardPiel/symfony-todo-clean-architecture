@@ -15,6 +15,11 @@ class Validation
         return !is_numeric($value);
     }
 
+    static public function isEmail($value): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
+
 }
 
 ?>

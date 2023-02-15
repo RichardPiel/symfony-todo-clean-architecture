@@ -1,6 +1,7 @@
-<?php 
+<?php
 
 namespace App\TaskManager\Domain\Validator;
+use App\TaskManager\Domain\RequestInterface;
 
 class ValidationRule
 {
@@ -9,23 +10,47 @@ class ValidationRule
 
     protected array $options;
 
+    protected string $message = "The field is not valid";
+
     public function __construct(string $rule, $options = [])
     {
 
-        // Check if static method exist in Validation class
-        if (!method_exists(Validation::class, $rule)) {
-            throw new \Exception("The $rule validation rule does not exist!");
+        // Check if closure existe in $options['rule']
+        if (isset($options['rule']) && $options['rule'] instanceof \Closure) {
+            $this->rule = $options['rule'];
+            unset($options['rule']);
+        } else {
+
+            // Check if static method exist in Validation class
+            if (!method_exists(Validation::class, $rule)) {
+                throw new \Exception("The $rule validation rule does not exist!");
+            }
+            $this->rule = $rule;
+
         }
 
-        $this->rule = $rule;
+
         $this->options = $options;
 
+        if (isset($this->options['message'])) {
+            $this->message = $this->options['message'];
+            unset($this->options['message']);
+        }
     }
 
-    public function process($value)
+    public function process(mixed $value = null, RequestInterface $request): ?string
     {
-        $isCallable =[Validation::class, $this->rule];
-        return $isCallable($value, ...$this->options);
+
+        if ($this->rule instanceof \Closure) {
+            $callable = $this->rule;
+        } else {
+            $callable = [Validation::class, $this->rule];
+        }
+
+        if (!$callable($value, $request)) {
+            return $this->message;
+        }
+        return null;
     }
 }
 
