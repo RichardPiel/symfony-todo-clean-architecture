@@ -36,41 +36,23 @@ class RegisterUserUseCase
     public function execute(RegisterUserRequest $request, RegisterUserPresenterInterface $presenter): void
     {
 
-        $validator = new Validator($request);
-        $validator
-            ->add('email', 'NotEmpty', ['message' => 'Email is required'])
-            ->add('email', 'IsEmail', ['message' => 'Email is not valid'])
-            ->add('password', 'NotEmpty', ['message' => 'Password is required'])
-            ->add('confirm_password', 'NotEmpty', ['message' => 'Confirm password is required'])
-            ->add('password', 'NotEqual', [
-                'message' => 'Confirm password is not equal to password',
-                'rule' => function ($value, $context) {
-                    return
-                        isset($context->confirmPassword) &&
-                        $value === $context->confirmPassword;
-                }
-            ])
-            ->validate();
-
+        $validator = new RegisterUserValidation($request);
 
         $registerUserResponse = new RegisterUserResponse();
 
-        if (!$validator->isValid()) {
-            $registerUserResponse->setErrors($validator->getErrors());
-        } else {
-            $user = $this->saveUser($request);
-            $registerUserResponse->setUserUuid($user->getUuid());
-            $this->mailer->sendWelcome($user);
+        try {
+
+            if (!$validator->isValid()) {
+                $registerUserResponse->setErrors($validator->getErrors());
+            } else {
+                $user = $this->saveUser($request);
+                $registerUserResponse->setUserUuid($user->getUuid());
+                $this->mailer->sendWelcome($user);
+            }
+
+        } catch (EmailAlreadyExistException $e) {
+            $registerUserResponse->setError('email', $e->getMessage());
         }
-        // try {
-        //     $user = $this->saveUser($request);
-        //     $registerUserResponse->setUserUuid($user->getUuid());
-        //     $this->mailer->sendWelcome($user);
-        // } catch (EmailAlreadyExistException | InvalidEmailFormatException $e) {
-        //     $registerUserResponse->setError('email', $e->getMessage());
-        // } catch (InvalidPasswordRequirementsException $e) {
-        //     $registerUserResponse->setError('password', $e->getMessage());
-        // }
 
         $presenter->present($registerUserResponse);
     }
@@ -80,7 +62,6 @@ class RegisterUserUseCase
         if ($this->emailAlreadyExist->check($request->getEmail())) {
             throw new EmailAlreadyExistException();
         }
-        $this->passwordRequirements->check($request->getPassword(), $request->getConfirmPassword());
 
         $user = new User(
             UserId::fromString(Uuid::uuid4()),
