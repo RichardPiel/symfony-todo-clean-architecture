@@ -19,10 +19,9 @@ class RegisterUserUseCaseTest extends TestCase
         $userRepository = $this->createMock(UserRepositoryInterface::class);
         $emailAlreadyExist = $this->createMock(CheckIfEmailAlreadyUsed::class);
         $userMail = $this->createMock(UserMailer::class);
-        $passwordRequirements = $this->createMock(PasswordRequirements::class);
         $presenter = $this->createMock(RegisterUserPresenterInterface::class);
 
-        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $passwordRequirements, $userMail);
+        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $userMail);
 
         $request = new RegisterUserRequest('example@email.com', 'password', 'password');
 
@@ -46,9 +45,8 @@ class RegisterUserUseCaseTest extends TestCase
         $emailAlreadyExist = $this->createMock(CheckIfEmailAlreadyUsed::class);
         $presenter = $this->createMock(RegisterUserPresenterInterface::class);
         $userMail = $this->createMock(UserMailer::class);
-        $passwordRequirements = $this->createMock(PasswordRequirements::class);
 
-        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $passwordRequirements, $userMail);
+        $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $userMail);
 
         $request = new RegisterUserRequest('example@email.com', 'password', 'password');
 

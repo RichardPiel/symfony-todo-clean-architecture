@@ -9,7 +9,6 @@ use App\TaskManager\Domain\Mailer\UserMailer;
 use App\TaskManager\Domain\Entity\User\UserId;
 use App\TaskManager\Domain\Entity\User\UserEmail;
 use App\TaskManager\Domain\Mailer\MailerInterface;
-use App\Shared\Domain\Service\PasswordRequirements;
 use App\TaskManager\Domain\Entity\User\UserPassword;
 use App\TaskManager\Domain\Repository\UserRepositoryInterface;
 use App\TaskManager\Domain\Exception\EmailAlreadyExistException;
@@ -17,7 +16,6 @@ use App\TaskManager\Domain\UseCase\Register\RegisterUserRequest;
 use App\TaskManager\Domain\Exception\InvalidEmailFormatException;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserResponse;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserValidator;
-use App\TaskManager\Domain\Exception\InvalidPasswordRequirementsException;
 use App\TaskManager\Domain\UseCase\Register\RegisterUserPresenterInterface;
 use App\TaskManager\Domain\UseCase\Register\Service\CheckIfEmailAlreadyUsed;
 
@@ -27,7 +25,6 @@ class RegisterUserUseCase
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private CheckIfEmailAlreadyUsed $emailAlreadyExist,
-        private PasswordRequirements $passwordRequirements,
         private UserMailer $mailer
     )
     {

@@ -14,21 +14,17 @@ class ValidationRule
 
     public function __construct(string $rule, $options = [])
     {
-
-        // Check if closure existe in $options['rule']
         if (isset($options['rule']) && $options['rule'] instanceof \Closure) {
             $this->rule = $options['rule'];
             unset($options['rule']);
         } else {
 
-            // Check if static method exist in Validation class
             if (!method_exists(Validation::class, $rule)) {
                 throw new \Exception("The $rule validation rule does not exist!");
             }
             $this->rule = $rule;
 
         }
-
 
         $this->options = $options;
 
@@ -40,7 +36,6 @@ class ValidationRule
 
     public function process(mixed $value = null, RequestInterface $request): ?string
     {
-
         if ($this->rule instanceof \Closure) {
             $callable = $this->rule;
         } else {
