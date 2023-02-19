@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\TaskManager\Domain\UseCase\CreateTag;
 
@@ -10,23 +10,31 @@ use App\TaskManager\Domain\Exception\TagAlreadyExistException;
 use App\TaskManager\Domain\UseCase\CreateTag\CreateTagResponse;
 use App\TaskManager\Domain\UseCase\CreateTag\Service\TagAlreadyExist;
 
-class CreateTagUseCase 
+class CreateTagUseCase
 {
 
     public function __construct(
         protected TagRepositoryInterface $repository,
         protected TagAlreadyExist $tagAlreadyExist
     )
-    {}
+    {
+    }
 
     public function execute(CreateTagRequest $request, CreateTagPresenterInterface $presenter)
     {
         $response = new CreateTagResponse();
 
+        $validator = new CreateTagValidation($request);
+
         try {
+
+            if (!$validator->isValid()) {
+                $response->setErrors($validator->getErrors());
+            } else {
                 $tag = $this->createTag($request);
                 $response->setTagUuid($tag->getUuid());
-
+            }
+            
         } catch (TagAlreadyExistException $th) {
             $response->setError('name', $th->getMessage());
 
@@ -51,7 +59,7 @@ class CreateTagUseCase
         $tag->setUser($request->getUser());
 
         $this->repository->save($tag);
-        
+
         return $tag;
 
     }

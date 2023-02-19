@@ -3,6 +3,7 @@
 namespace App\TaskManager\Domain\UseCase\MarkTaskAsDone;
 
 use DateTimeImmutable;
+use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Exception\TaskNotFoundException;
 use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 use App\TaskManager\Domain\Repository\TaskRepositoryInterface;
@@ -16,13 +17,17 @@ class MarkTaskAsDoneUseCase {
     )
     {}
 
-    public function execute(MarkTaskAsDoneRequest $request, MarkTaskAsDonePresenterInterface $presenter)
+    public function execute(MarkTaskAsDoneRequest $request, MarkTaskAsDonePresenterInterface $presenter): void
     {
         $response = new MarkTaskAsDoneResponse();
-
+        $validator = new MarkTaskAsDoneValidation($request);
         try {
-            $task = $this->markAsDone($request);
-            $response->setTask($task);
+            if (!$validator->isValid()) {
+                $response->setErrors($validator->getErrors());
+            } else {
+                $task = $this->markAsDone($request);
+                $response->setTask($task);
+            }
         } catch (TaskAlreadyDoneException $th) {
             $response->setError('name', $th->getMessage());
         }
@@ -30,7 +35,7 @@ class MarkTaskAsDoneUseCase {
         $presenter->present($response);
     }
 
-    private function markAsDone(MarkTaskAsDoneRequest $request)
+    private function markAsDone(MarkTaskAsDoneRequest $request): Task
     {
         $task = $this->taskRepository->findById($request->getUuidTask());
         

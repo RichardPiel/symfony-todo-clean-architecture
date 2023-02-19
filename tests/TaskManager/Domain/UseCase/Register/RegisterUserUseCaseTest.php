@@ -23,7 +23,7 @@ class RegisterUserUseCaseTest extends TestCase
 
         $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $userMail);
 
-        $request = new RegisterUserRequest('example@email.com', 'password', 'password');
+        $request = new RegisterUserRequest('example@email.com', 'DifficultPassword$12', 'DifficultPassword$12');
 
         $emailAlreadyExist->expects($this->once())
             ->method('check')
@@ -48,7 +48,7 @@ class RegisterUserUseCaseTest extends TestCase
 
         $useCase = new RegisterUserUseCase($userRepository, $emailAlreadyExist, $userMail);
 
-        $request = new RegisterUserRequest('example@email.com', 'password', 'password');
+        $request = new RegisterUserRequest('example@email.com', 'DifficultPassword$12', 'DifficultPassword$12');
 
         $emailAlreadyExist->expects($this->once())
             ->method('check')

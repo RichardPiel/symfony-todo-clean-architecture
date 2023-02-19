@@ -27,10 +27,15 @@ class CreateTaskUseCase
     public function execute(CreateTaskRequest $request, CreateTaskPresenterInterface $presenter)
     {
         $response = new CreateTaskResponse();
+        $validator = new CreateTaskValidation($request);
 
         try {
-            $task = $this->createTask($request);
-            $response->setTaskUuid($task->getUuid());
+            if (!$validator->isValid()) {
+                $response->setErrors($validator->getErrors());
+            } else {
+                $task = $this->createTask($request);
+                $response->setTaskUuid($task->getUuid());
+            }
         } catch (NumberOfTasksExceededException $th) {
             $response->setError('name', $th->getMessage());
         }

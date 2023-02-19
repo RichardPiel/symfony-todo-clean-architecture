@@ -21,6 +21,12 @@ class RegisterUserValidation extends Validator
                         $value === $request->confirmPassword;
                 }
             ])
+            ->add('password', 'PasswordDifficulty', [
+                'message' => 'Complexité du mot de passe insuffisante.',
+                'rule' => function ($value, $context) {
+                    return !(strlen($value) < 8 || !preg_match('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[\x00-\x7F]*/', $value));
+                }
+            ])
             ->validate();
     }
 
