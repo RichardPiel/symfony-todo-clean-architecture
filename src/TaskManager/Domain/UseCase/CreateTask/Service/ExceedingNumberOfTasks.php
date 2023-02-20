@@ -16,7 +16,7 @@ class ExceedingNumberOfTasks {
     {
         $tasks = $this->taskReposity->findBy(['user' => $user]);
 
-        return count($tasks) > 5;
+        return count($tasks) > 9999;
 
     }
 

@@ -4,6 +4,8 @@ namespace App\TaskManager\Domain\UseCase\CreateTask;
 
 use Ramsey\Uuid\Uuid;
 use App\TaskManager\Domain\Entity\Task\Task;
+use App\Shared\Domain\Event\TaskCreatedEvent;
+use App\Shared\Domain\Event\EventBusInterface;
 use App\TaskManager\Domain\Entity\Task\TaskId;
 use App\TaskManager\Domain\Repository\TagRepositoryInterface;
 use App\TaskManager\Domain\Repository\TaskRepositoryInterface;
@@ -19,7 +21,8 @@ class CreateTaskUseCase
     public function __construct(
         private TaskRepositoryInterface $taskRepository,
         private TagRepositoryInterface $tagRepository,
-        private ExceedingNumberOfTasks $exceedingNumberOfTasks
+        private ExceedingNumberOfTasks $exceedingNumberOfTasks,
+        private readonly EventBusInterface $eventBus,
     )
     {
     }
@@ -75,6 +78,15 @@ class CreateTaskUseCase
         }
 
         $this->taskRepository->save($task);
+
+        $task->registerEvent(
+            new TaskCreatedEvent(
+                $task->getUuid(),
+                $task->getName(),
+                $task->getUser()
+            )
+        );
+        $this->eventBus->dispatch(...$task->releaseEvents());
 
         return $task;
 

@@ -6,10 +6,11 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use App\TaskManager\Domain\Entity\Tag\Tag;
 use App\TaskManager\Domain\Entity\User\User;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\TaskManager\Domain\Exception\TaskAlreadyDoneException;
 
-class Task implements \JsonSerializable
+class Task extends AggregateRoot implements \JsonSerializable
 {
     protected string $uuid;
     protected ?string $content;

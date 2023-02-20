@@ -7,6 +7,7 @@
         <id name="uuid" type="guid" column="id" length="36" />
         <field name="email" column="email" length="255" />
         <field name="password" column="password" length="255" />
+        <field name="tasksCount" column="tasks_count" length="255" />
         <one-to-many
             field="tasks"
             target-entity="App\TaskManager\Domain\Entity\Task\Task"

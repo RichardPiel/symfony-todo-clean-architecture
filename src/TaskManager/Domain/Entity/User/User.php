@@ -2,12 +2,13 @@
 
 namespace App\TaskManager\Domain\Entity\User;
 
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\TaskManager\Domain\Entity\Task\Task;
 use App\TaskManager\Domain\Entity\User\UserId;
 use App\TaskManager\Domain\Entity\User\UserEmail;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class User implements \JsonSerializable
+class User extends AggregateRoot implements \JsonSerializable
 {
     /**
      * @var array<Task>
@@ -16,6 +17,7 @@ class User implements \JsonSerializable
     protected ?string $uuid;
     protected ?string $email;
     protected string $password;
+    protected int $tasksCount;
     protected $tags;
     
     public function __construct(UserId $uuid = null, UserEmail $email = null)
